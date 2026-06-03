@@ -4,3 +4,5 @@ A repo for the 2 month SoC.
 Team members-Arush Agarwal,Bhuvaneesh Vijayvargiya,Ranveer Singh Thakur
 <br> 
 Topic--Intelligent Cargo Packing & Spatial Neuro-Optimization
+<br> 
+PS details--https://drive.google.com/file/d/1e0F_648dKCm4njNmNO459wFf9FscmqZq/view?usp=drive_link
