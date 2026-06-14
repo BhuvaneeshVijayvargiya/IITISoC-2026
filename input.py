@@ -15,3 +15,5 @@ def ulds():
         u=UlDs(row["ULD_ID"],row["Length"],row["Width"],row["Height"],row["MaxWeight"])
         uldlist.append(u)
     return uldlist
+#this file reads the input from csv files(streamlit logic will come in end) and stores it in package and uld objects which are further stored in two respective lists.
+#so main return is two lists with packages and uld objects.
