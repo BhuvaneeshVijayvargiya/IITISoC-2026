@@ -18,4 +18,7 @@ class UlDs:
         return (self.length*self.width*self.height)
     
 
-    
+    #this is the uld class file with id,dimension,max weight variables.
+    """z is the heightmap variable,we also have variables to track the curr weight packed in the uld(currweight),
+    the respective extreme points generated(extr),the list of packages in the uld(packaged)."""
+    #volume function returns the volume of the uld.
