@@ -1,0 +1,1502 @@
+[
+  {
+    "run_id": 0,
+    "summary": {
+      "total_cost": 100.0,
+      "total_packed_packages": 16,
+      "number_of_priority_ulds": 1,
+      "left_behind_economy_cost": 0,
+      "K": 100.0,
+      "is_feasible": true,
+      "priority_failures": []
+    },
+    "uld_stats": [
+      {
+        "uld_id": "ULD-1",
+        "packages_packed": 7,
+        "weight_used": 970.0,
+        "weight_limit": 1000,
+        "weight_utilization_pct": 97.0,
+        "volume_utilization_pct": 32.47,
+        "has_priority": true
+      },
+      {
+        "uld_id": "ULD-2",
+        "packages_packed": 8,
+        "weight_used": 995.0,
+        "weight_limit": 1000,
+        "weight_utilization_pct": 99.5,
+        "volume_utilization_pct": 39.0,
+        "has_priority": false
+      },
+      {
+        "uld_id": "ULD-3",
+        "packages_packed": 1,
+        "weight_used": 170.0,
+        "weight_limit": 700,
+        "weight_utilization_pct": 24.29,
+        "volume_utilization_pct": 12.86,
+        "has_priority": false
+      }
+    ],
+    "placements": [
+      {
+        "package_id": "P-001",
+        "package_type": "Priority",
+        "uld_id": "ULD-1",
+        "x0": 0.0,
+        "y0": 0.0,
+        "z0": 0.0,
+        "x1": 80.0,
+        "y1": 60.0,
+        "z1": 50.0,
+        "orientation_used": [
+          80,
+          60,
+          50
+        ]
+      },
+      {
+        "package_id": "P-002",
+        "package_type": "Priority",
+        "uld_id": "ULD-1",
+        "x0": 0.0,
+        "y0": 0.0,
+        "z0": 50.0,
+        "x1": 100.0,
+        "y1": 80.0,
+        "z1": 110.0,
+        "orientation_used": [
+          100,
+          80,
+          60
+        ]
+      },
+      {
+        "package_id": "P-003",
+        "package_type": "Priority",
+        "uld_id": "ULD-1",
+        "x0": 0.0,
+        "y0": 0.0,
+        "z0": 110.0,
+        "x1": 60.0,
+        "y1": 50.0,
+        "z1": 150.0,
+        "orientation_used": [
+          60,
+          50,
+          40
+        ]
+      },
+      {
+        "package_id": "P-004",
+        "package_type": "Priority",
+        "uld_id": "ULD-1",
+        "x0": 0.0,
+        "y0": 80.0,
+        "z0": 0.0,
+        "x1": 120.0,
+        "y1": 170.0,
+        "z1": 70.0,
+        "orientation_used": [
+          120,
+          90,
+          70
+        ]
+      },
+      {
+        "package_id": "P-005",
+        "package_type": "Priority",
+        "uld_id": "ULD-1",
+        "x0": 0.0,
+        "y0": 50.0,
+        "z0": 110.0,
+        "x1": 70.0,
+        "y1": 110.0,
+        "z1": 160.0,
+        "orientation_used": [
+          70,
+          60,
+          50
+        ]
+      },
+      {
+        "package_id": "P-006",
+        "package_type": "Priority",
+        "uld_id": "ULD-1",
+        "x0": 0.0,
+        "y0": 110.0,
+        "z0": 70.0,
+        "x1": 90.0,
+        "y1": 180.0,
+        "z1": 130.0,
+        "orientation_used": [
+          90,
+          70,
+          60
+        ]
+      },
+      {
+        "package_id": "E-001",
+        "package_type": "Economy",
+        "uld_id": "ULD-2",
+        "x0": 0.0,
+        "y0": 0.0,
+        "z0": 0.0,
+        "x1": 80.0,
+        "y1": 60.0,
+        "z1": 50.0,
+        "orientation_used": [
+          80,
+          60,
+          50
+        ]
+      },
+      {
+        "package_id": "E-002",
+        "package_type": "Economy",
+        "uld_id": "ULD-2",
+        "x0": 0.0,
+        "y0": 0.0,
+        "z0": 50.0,
+        "x1": 110.0,
+        "y1": 80.0,
+        "z1": 120.0,
+        "orientation_used": [
+          110,
+          80,
+          70
+        ]
+      },
+      {
+        "package_id": "E-003",
+        "package_type": "Economy",
+        "uld_id": "ULD-1",
+        "x0": 0.0,
+        "y0": 110.0,
+        "z0": 130.0,
+        "x1": 50.0,
+        "y1": 150.0,
+        "z1": 160.0,
+        "orientation_used": [
+          50,
+          40,
+          30
+        ]
+      },
+      {
+        "package_id": "E-004",
+        "package_type": "Economy",
+        "uld_id": "ULD-2",
+        "x0": 0.0,
+        "y0": 80.0,
+        "z0": 0.0,
+        "x1": 90.0,
+        "y1": 150.0,
+        "z1": 60.0,
+        "orientation_used": [
+          90,
+          70,
+          60
+        ]
+      },
+      {
+        "package_id": "E-005",
+        "package_type": "Economy",
+        "uld_id": "ULD-2",
+        "x0": 0.0,
+        "y0": 0.0,
+        "z0": 120.0,
+        "x1": 60.0,
+        "y1": 50.0,
+        "z1": 160.0,
+        "orientation_used": [
+          60,
+          50,
+          40
+        ]
+      },
+      {
+        "package_id": "E-006",
+        "package_type": "Economy",
+        "uld_id": "ULD-2",
+        "x0": 0.0,
+        "y0": 80.0,
+        "z0": 60.0,
+        "x1": 130.0,
+        "y1": 180.0,
+        "z1": 140.0,
+        "orientation_used": [
+          130,
+          100,
+          80
+        ]
+      },
+      {
+        "package_id": "E-007",
+        "package_type": "Economy",
+        "uld_id": "ULD-2",
+        "x0": 80.0,
+        "y0": 0.0,
+        "z0": 0.0,
+        "x1": 150.0,
+        "y1": 55.0,
+        "z1": 45.0,
+        "orientation_used": [
+          70,
+          55,
+          45
+        ]
+      },
+      {
+        "package_id": "E-008",
+        "package_type": "Economy",
+        "uld_id": "ULD-2",
+        "x0": 60.0,
+        "y0": 0.0,
+        "z0": 120.0,
+        "x1": 100.0,
+        "y1": 35.0,
+        "z1": 150.0,
+        "orientation_used": [
+          40,
+          35,
+          30
+        ]
+      },
+      {
+        "package_id": "E-009",
+        "package_type": "Economy",
+        "uld_id": "ULD-3",
+        "x0": 0.0,
+        "y0": 0.0,
+        "z0": 0.0,
+        "x1": 95.0,
+        "y1": 75.0,
+        "z1": 65.0,
+        "orientation_used": [
+          95,
+          75,
+          65
+        ]
+      },
+      {
+        "package_id": "E-010",
+        "package_type": "Economy",
+        "uld_id": "ULD-2",
+        "x0": 60.0,
+        "y0": 35.0,
+        "z0": 120.0,
+        "x1": 115.0,
+        "y1": 80.0,
+        "z1": 155.0,
+        "orientation_used": [
+          55,
+          45,
+          35
+        ]
+      }
+    ],
+    "unpacked": []
+  },
+  {
+    "run_id": 1,
+    "summary": {
+      "total_cost": 100.0,
+      "total_packed_packages": 16,
+      "number_of_priority_ulds": 1,
+      "left_behind_economy_cost": 0,
+      "K": 100.0,
+      "is_feasible": true,
+      "priority_failures": []
+    },
+    "uld_stats": [
+      {
+        "uld_id": "ULD-1",
+        "packages_packed": 7,
+        "weight_used": 980.0,
+        "weight_limit": 1000,
+        "weight_utilization_pct": 98.0,
+        "volume_utilization_pct": 32.85,
+        "has_priority": true
+      },
+      {
+        "uld_id": "ULD-2",
+        "packages_packed": 8,
+        "weight_used": 975.0,
+        "weight_limit": 1000,
+        "weight_utilization_pct": 97.5,
+        "volume_utilization_pct": 36.41,
+        "has_priority": false
+      },
+      {
+        "uld_id": "ULD-3",
+        "packages_packed": 1,
+        "weight_used": 180.0,
+        "weight_limit": 700,
+        "weight_utilization_pct": 25.71,
+        "volume_utilization_pct": 17.11,
+        "has_priority": false
+      }
+    ],
+    "placements": [
+      {
+        "package_id": "P-006",
+        "package_type": "Priority",
+        "uld_id": "ULD-1",
+        "x0": 0.0,
+        "y0": 0.0,
+        "z0": 0.0,
+        "x1": 60.0,
+        "y1": 90.0,
+        "z1": 70.0,
+        "orientation_used": [
+          60,
+          90,
+          70
+        ]
+      },
+      {
+        "package_id": "P-005",
+        "package_type": "Priority",
+        "uld_id": "ULD-1",
+        "x0": 0.0,
+        "y0": 0.0,
+        "z0": 70.0,
+        "x1": 60.0,
+        "y1": 70.0,
+        "z1": 120.0,
+        "orientation_used": [
+          60,
+          70,
+          50
+        ]
+      },
+      {
+        "package_id": "P-004",
+        "package_type": "Priority",
+        "uld_id": "ULD-1",
+        "x0": 0.0,
+        "y0": 90.0,
+        "z0": 0.0,
+        "x1": 70.0,
+        "y1": 180.0,
+        "z1": 120.0,
+        "orientation_used": [
+          70,
+          90,
+          120
+        ]
+      },
+      {
+        "package_id": "P-002",
+        "package_type": "Priority",
+        "uld_id": "ULD-1",
+        "x0": 60.0,
+        "y0": 0.0,
+        "z0": 0.0,
+        "x1": 160.0,
+        "y1": 60.0,
+        "z1": 80.0,
+        "orientation_used": [
+          100,
+          60,
+          80
+        ]
+      },
+      {
+        "package_id": "P-003",
+        "package_type": "Priority",
+        "uld_id": "ULD-1",
+        "x0": 60.0,
+        "y0": 0.0,
+        "z0": 80.0,
+        "x1": 100.0,
+        "y1": 60.0,
+        "z1": 130.0,
+        "orientation_used": [
+          40,
+          60,
+          50
+        ]
+      },
+      {
+        "package_id": "P-001",
+        "package_type": "Priority",
+        "uld_id": "ULD-1",
+        "x0": 70.0,
+        "y0": 60.0,
+        "z0": 0.0,
+        "x1": 150.0,
+        "y1": 110.0,
+        "z1": 60.0,
+        "orientation_used": [
+          80,
+          50,
+          60
+        ]
+      },
+      {
+        "package_id": "E-006",
+        "package_type": "Economy",
+        "uld_id": "ULD-2",
+        "x0": 0.0,
+        "y0": 0.0,
+        "z0": 0.0,
+        "x1": 130.0,
+        "y1": 80.0,
+        "z1": 100.0,
+        "orientation_used": [
+          130,
+          80,
+          100
+        ]
+      },
+      {
+        "package_id": "E-010",
+        "package_type": "Economy",
+        "uld_id": "ULD-1",
+        "x0": 70.0,
+        "y0": 60.0,
+        "z0": 60.0,
+        "x1": 115.0,
+        "y1": 95.0,
+        "z1": 115.0,
+        "orientation_used": [
+          45,
+          35,
+          55
+        ]
+      },
+      {
+        "package_id": "E-003",
+        "package_type": "Economy",
+        "uld_id": "ULD-2",
+        "x0": 0.0,
+        "y0": 0.0,
+        "z0": 100.0,
+        "x1": 50.0,
+        "y1": 40.0,
+        "z1": 130.0,
+        "orientation_used": [
+          50,
+          40,
+          30
+        ]
+      },
+      {
+        "package_id": "E-004",
+        "package_type": "Economy",
+        "uld_id": "ULD-2",
+        "x0": 0.0,
+        "y0": 80.0,
+        "z0": 0.0,
+        "x1": 60.0,
+        "y1": 170.0,
+        "z1": 70.0,
+        "orientation_used": [
+          60,
+          90,
+          70
+        ]
+      },
+      {
+        "package_id": "E-007",
+        "package_type": "Economy",
+        "uld_id": "ULD-2",
+        "x0": 0.0,
+        "y0": 40.0,
+        "z0": 100.0,
+        "x1": 70.0,
+        "y1": 85.0,
+        "z1": 155.0,
+        "orientation_used": [
+          70,
+          45,
+          55
+        ]
+      },
+      {
+        "package_id": "E-001",
+        "package_type": "Economy",
+        "uld_id": "ULD-2",
+        "x0": 0.0,
+        "y0": 85.0,
+        "z0": 70.0,
+        "x1": 50.0,
+        "y1": 165.0,
+        "z1": 130.0,
+        "orientation_used": [
+          50,
+          80,
+          60
+        ]
+      },
+      {
+        "package_id": "E-005",
+        "package_type": "Economy",
+        "uld_id": "ULD-2",
+        "x0": 50.0,
+        "y0": 85.0,
+        "z0": 70.0,
+        "x1": 100.0,
+        "y1": 145.0,
+        "z1": 110.0,
+        "orientation_used": [
+          50,
+          60,
+          40
+        ]
+      },
+      {
+        "package_id": "E-009",
+        "package_type": "Economy",
+        "uld_id": "ULD-2",
+        "x0": 100.0,
+        "y0": 80.0,
+        "z0": 0.0,
+        "x1": 175.0,
+        "y1": 145.0,
+        "z1": 95.0,
+        "orientation_used": [
+          75,
+          65,
+          95
+        ]
+      },
+      {
+        "package_id": "E-008",
+        "package_type": "Economy",
+        "uld_id": "ULD-2",
+        "x0": 0.0,
+        "y0": 0.0,
+        "z0": 130.0,
+        "x1": 40.0,
+        "y1": 35.0,
+        "z1": 160.0,
+        "orientation_used": [
+          40,
+          35,
+          30
+        ]
+      },
+      {
+        "package_id": "E-002",
+        "package_type": "Economy",
+        "uld_id": "ULD-3",
+        "x0": 0.0,
+        "y0": 0.0,
+        "z0": 0.0,
+        "x1": 110.0,
+        "y1": 70.0,
+        "z1": 80.0,
+        "orientation_used": [
+          110,
+          70,
+          80
+        ]
+      }
+    ],
+    "unpacked": []
+  },
+  {
+    "run_id": 2,
+    "summary": {
+      "total_cost": 100.0,
+      "total_packed_packages": 16,
+      "number_of_priority_ulds": 1,
+      "left_behind_economy_cost": 0,
+      "K": 100.0,
+      "is_feasible": true,
+      "priority_failures": []
+    },
+    "uld_stats": [
+      {
+        "uld_id": "ULD-1",
+        "packages_packed": 7,
+        "weight_used": 970.0,
+        "weight_limit": 1000,
+        "weight_utilization_pct": 97.0,
+        "volume_utilization_pct": 32.47,
+        "has_priority": true
+      },
+      {
+        "uld_id": "ULD-2",
+        "packages_packed": 7,
+        "weight_used": 915.0,
+        "weight_limit": 1000,
+        "weight_utilization_pct": 91.5,
+        "volume_utilization_pct": 38.5,
+        "has_priority": false
+      },
+      {
+        "uld_id": "ULD-3",
+        "packages_packed": 2,
+        "weight_used": 250.0,
+        "weight_limit": 700,
+        "weight_utilization_pct": 35.71,
+        "volume_utilization_pct": 13.83,
+        "has_priority": false
+      }
+    ],
+    "placements": [
+      {
+        "package_id": "P-003",
+        "package_type": "Priority",
+        "uld_id": "ULD-1",
+        "x0": 0.0,
+        "y0": 0.0,
+        "z0": 0.0,
+        "x1": 60.0,
+        "y1": 50.0,
+        "z1": 40.0,
+        "orientation_used": [
+          60,
+          50,
+          40
+        ]
+      },
+      {
+        "package_id": "P-002",
+        "package_type": "Priority",
+        "uld_id": "ULD-1",
+        "x0": 0.0,
+        "y0": 0.0,
+        "z0": 40.0,
+        "x1": 80.0,
+        "y1": 60.0,
+        "z1": 140.0,
+        "orientation_used": [
+          80,
+          60,
+          100
+        ]
+      },
+      {
+        "package_id": "P-006",
+        "package_type": "Priority",
+        "uld_id": "ULD-1",
+        "x0": 0.0,
+        "y0": 60.0,
+        "z0": 0.0,
+        "x1": 90.0,
+        "y1": 120.0,
+        "z1": 70.0,
+        "orientation_used": [
+          90,
+          60,
+          70
+        ]
+      },
+      {
+        "package_id": "P-001",
+        "package_type": "Priority",
+        "uld_id": "ULD-1",
+        "x0": 0.0,
+        "y0": 60.0,
+        "z0": 70.0,
+        "x1": 60.0,
+        "y1": 110.0,
+        "z1": 150.0,
+        "orientation_used": [
+          60,
+          50,
+          80
+        ]
+      },
+      {
+        "package_id": "P-005",
+        "package_type": "Priority",
+        "uld_id": "ULD-1",
+        "x0": 0.0,
+        "y0": 110.0,
+        "z0": 70.0,
+        "x1": 50.0,
+        "y1": 180.0,
+        "z1": 130.0,
+        "orientation_used": [
+          50,
+          70,
+          60
+        ]
+      },
+      {
+        "package_id": "P-004",
+        "package_type": "Priority",
+        "uld_id": "ULD-1",
+        "x0": 60.0,
+        "y0": 60.0,
+        "z0": 70.0,
+        "x1": 150.0,
+        "y1": 180.0,
+        "z1": 140.0,
+        "orientation_used": [
+          90,
+          120,
+          70
+        ]
+      },
+      {
+        "package_id": "E-007",
+        "package_type": "Economy",
+        "uld_id": "ULD-2",
+        "x0": 0.0,
+        "y0": 0.0,
+        "z0": 0.0,
+        "x1": 45.0,
+        "y1": 70.0,
+        "z1": 55.0,
+        "orientation_used": [
+          45,
+          70,
+          55
+        ]
+      },
+      {
+        "package_id": "E-003",
+        "package_type": "Economy",
+        "uld_id": "ULD-1",
+        "x0": 0.0,
+        "y0": 110.0,
+        "z0": 130.0,
+        "x1": 40.0,
+        "y1": 160.0,
+        "z1": 160.0,
+        "orientation_used": [
+          40,
+          50,
+          30
+        ]
+      },
+      {
+        "package_id": "E-010",
+        "package_type": "Economy",
+        "uld_id": "ULD-2",
+        "x0": 0.0,
+        "y0": 0.0,
+        "z0": 55.0,
+        "x1": 45.0,
+        "y1": 35.0,
+        "z1": 110.0,
+        "orientation_used": [
+          45,
+          35,
+          55
+        ]
+      },
+      {
+        "package_id": "E-006",
+        "package_type": "Economy",
+        "uld_id": "ULD-2",
+        "x0": 0.0,
+        "y0": 35.0,
+        "z0": 55.0,
+        "x1": 130.0,
+        "y1": 115.0,
+        "z1": 155.0,
+        "orientation_used": [
+          130,
+          80,
+          100
+        ]
+      },
+      {
+        "package_id": "E-009",
+        "package_type": "Economy",
+        "uld_id": "ULD-2",
+        "x0": 130.0,
+        "y0": 0.0,
+        "z0": 0.0,
+        "x1": 195.0,
+        "y1": 75.0,
+        "z1": 95.0,
+        "orientation_used": [
+          65,
+          75,
+          95
+        ]
+      },
+      {
+        "package_id": "E-008",
+        "package_type": "Economy",
+        "uld_id": "ULD-2",
+        "x0": 0.0,
+        "y0": 70.0,
+        "z0": 0.0,
+        "x1": 35.0,
+        "y1": 110.0,
+        "z1": 30.0,
+        "orientation_used": [
+          35,
+          40,
+          30
+        ]
+      },
+      {
+        "package_id": "E-002",
+        "package_type": "Economy",
+        "uld_id": "ULD-2",
+        "x0": 130.0,
+        "y0": 75.0,
+        "z0": 0.0,
+        "x1": 200.0,
+        "y1": 155.0,
+        "z1": 110.0,
+        "orientation_used": [
+          70,
+          80,
+          110
+        ]
+      },
+      {
+        "package_id": "E-001",
+        "package_type": "Economy",
+        "uld_id": "ULD-2",
+        "x0": 0.0,
+        "y0": 115.0,
+        "z0": 0.0,
+        "x1": 80.0,
+        "y1": 165.0,
+        "z1": 60.0,
+        "orientation_used": [
+          80,
+          50,
+          60
+        ]
+      },
+      {
+        "package_id": "E-005",
+        "package_type": "Economy",
+        "uld_id": "ULD-3",
+        "x0": 0.0,
+        "y0": 0.0,
+        "z0": 0.0,
+        "x1": 60.0,
+        "y1": 50.0,
+        "z1": 40.0,
+        "orientation_used": [
+          60,
+          50,
+          40
+        ]
+      },
+      {
+        "package_id": "E-004",
+        "package_type": "Economy",
+        "uld_id": "ULD-3",
+        "x0": 0.0,
+        "y0": 0.0,
+        "z0": 40.0,
+        "x1": 60.0,
+        "y1": 90.0,
+        "z1": 110.0,
+        "orientation_used": [
+          60,
+          90,
+          70
+        ]
+      }
+    ],
+    "unpacked": []
+  },
+  {
+    "run_id": 3,
+    "summary": {
+      "total_cost": 200.0,
+      "total_packed_packages": 16,
+      "number_of_priority_ulds": 2,
+      "left_behind_economy_cost": 0,
+      "K": 100.0,
+      "is_feasible": true,
+      "priority_failures": []
+    },
+    "uld_stats": [
+      {
+        "uld_id": "ULD-3",
+        "packages_packed": 5,
+        "weight_used": 660.0,
+        "weight_limit": 700,
+        "weight_utilization_pct": 94.29,
+        "volume_utilization_pct": 39.67,
+        "has_priority": true
+      },
+      {
+        "uld_id": "ULD-1",
+        "packages_packed": 7,
+        "weight_used": 990.0,
+        "weight_limit": 1000,
+        "weight_utilization_pct": 99.0,
+        "volume_utilization_pct": 36.65,
+        "has_priority": true
+      },
+      {
+        "uld_id": "ULD-2",
+        "packages_packed": 4,
+        "weight_used": 485.0,
+        "weight_limit": 1000,
+        "weight_utilization_pct": 48.5,
+        "volume_utilization_pct": 20.86,
+        "has_priority": false
+      }
+    ],
+    "placements": [
+      {
+        "package_id": "P-006",
+        "package_type": "Priority",
+        "uld_id": "ULD-3",
+        "x0": 0.0,
+        "y0": 0.0,
+        "z0": 0.0,
+        "x1": 70.0,
+        "y1": 90.0,
+        "z1": 60.0,
+        "orientation_used": [
+          70,
+          90,
+          60
+        ]
+      },
+      {
+        "package_id": "P-001",
+        "package_type": "Priority",
+        "uld_id": "ULD-3",
+        "x0": 0.0,
+        "y0": 0.0,
+        "z0": 60.0,
+        "x1": 50.0,
+        "y1": 80.0,
+        "z1": 120.0,
+        "orientation_used": [
+          50,
+          80,
+          60
+        ]
+      },
+      {
+        "package_id": "P-002",
+        "package_type": "Priority",
+        "uld_id": "ULD-3",
+        "x0": 50.0,
+        "y0": 0.0,
+        "z0": 60.0,
+        "x1": 130.0,
+        "y1": 100.0,
+        "z1": 120.0,
+        "orientation_used": [
+          80,
+          100,
+          60
+        ]
+      },
+      {
+        "package_id": "P-005",
+        "package_type": "Priority",
+        "uld_id": "ULD-3",
+        "x0": 0.0,
+        "y0": 100.0,
+        "z0": 0.0,
+        "x1": 60.0,
+        "y1": 150.0,
+        "z1": 70.0,
+        "orientation_used": [
+          60,
+          50,
+          70
+        ]
+      },
+      {
+        "package_id": "P-004",
+        "package_type": "Priority",
+        "uld_id": "ULD-1",
+        "x0": 0.0,
+        "y0": 0.0,
+        "z0": 0.0,
+        "x1": 120.0,
+        "y1": 70.0,
+        "z1": 90.0,
+        "orientation_used": [
+          120,
+          70,
+          90
+        ]
+      },
+      {
+        "package_id": "P-003",
+        "package_type": "Priority",
+        "uld_id": "ULD-3",
+        "x0": 0.0,
+        "y0": 80.0,
+        "z0": 70.0,
+        "x1": 40.0,
+        "y1": 140.0,
+        "z1": 120.0,
+        "orientation_used": [
+          40,
+          60,
+          50
+        ]
+      },
+      {
+        "package_id": "E-003",
+        "package_type": "Economy",
+        "uld_id": "ULD-1",
+        "x0": 0.0,
+        "y0": 0.0,
+        "z0": 90.0,
+        "x1": 50.0,
+        "y1": 40.0,
+        "z1": 120.0,
+        "orientation_used": [
+          50,
+          40,
+          30
+        ]
+      },
+      {
+        "package_id": "E-009",
+        "package_type": "Economy",
+        "uld_id": "ULD-1",
+        "x0": 0.0,
+        "y0": 70.0,
+        "z0": 0.0,
+        "x1": 95.0,
+        "y1": 135.0,
+        "z1": 75.0,
+        "orientation_used": [
+          95,
+          65,
+          75
+        ]
+      },
+      {
+        "package_id": "E-002",
+        "package_type": "Economy",
+        "uld_id": "ULD-1",
+        "x0": 95.0,
+        "y0": 70.0,
+        "z0": 0.0,
+        "x1": 175.0,
+        "y1": 140.0,
+        "z1": 110.0,
+        "orientation_used": [
+          80,
+          70,
+          110
+        ]
+      },
+      {
+        "package_id": "E-010",
+        "package_type": "Economy",
+        "uld_id": "ULD-1",
+        "x0": 0.0,
+        "y0": 40.0,
+        "z0": 90.0,
+        "x1": 35.0,
+        "y1": 85.0,
+        "z1": 145.0,
+        "orientation_used": [
+          35,
+          45,
+          55
+        ]
+      },
+      {
+        "package_id": "E-007",
+        "package_type": "Economy",
+        "uld_id": "ULD-1",
+        "x0": 0.0,
+        "y0": 85.0,
+        "z0": 75.0,
+        "x1": 55.0,
+        "y1": 155.0,
+        "z1": 120.0,
+        "orientation_used": [
+          55,
+          70,
+          45
+        ]
+      },
+      {
+        "package_id": "E-004",
+        "package_type": "Economy",
+        "uld_id": "ULD-1",
+        "x0": 50.0,
+        "y0": 0.0,
+        "z0": 90.0,
+        "x1": 140.0,
+        "y1": 60.0,
+        "z1": 160.0,
+        "orientation_used": [
+          90,
+          60,
+          70
+        ]
+      },
+      {
+        "package_id": "E-008",
+        "package_type": "Economy",
+        "uld_id": "ULD-2",
+        "x0": 0.0,
+        "y0": 0.0,
+        "z0": 0.0,
+        "x1": 35.0,
+        "y1": 40.0,
+        "z1": 30.0,
+        "orientation_used": [
+          35,
+          40,
+          30
+        ]
+      },
+      {
+        "package_id": "E-001",
+        "package_type": "Economy",
+        "uld_id": "ULD-2",
+        "x0": 0.0,
+        "y0": 0.0,
+        "z0": 30.0,
+        "x1": 50.0,
+        "y1": 80.0,
+        "z1": 90.0,
+        "orientation_used": [
+          50,
+          80,
+          60
+        ]
+      },
+      {
+        "package_id": "E-006",
+        "package_type": "Economy",
+        "uld_id": "ULD-2",
+        "x0": 0.0,
+        "y0": 80.0,
+        "z0": 0.0,
+        "x1": 130.0,
+        "y1": 180.0,
+        "z1": 80.0,
+        "orientation_used": [
+          130,
+          100,
+          80
+        ]
+      },
+      {
+        "package_id": "E-005",
+        "package_type": "Economy",
+        "uld_id": "ULD-2",
+        "x0": 0.0,
+        "y0": 0.0,
+        "z0": 90.0,
+        "x1": 40.0,
+        "y1": 50.0,
+        "z1": 150.0,
+        "orientation_used": [
+          40,
+          50,
+          60
+        ]
+      }
+    ],
+    "unpacked": []
+  },
+  {
+    "run_id": 4,
+    "summary": {
+      "total_cost": 100.0,
+      "total_packed_packages": 16,
+      "number_of_priority_ulds": 1,
+      "left_behind_economy_cost": 0,
+      "K": 100.0,
+      "is_feasible": true,
+      "priority_failures": []
+    },
+    "uld_stats": [
+      {
+        "uld_id": "ULD-1",
+        "packages_packed": 7,
+        "weight_used": 1000.0,
+        "weight_limit": 1000,
+        "weight_utilization_pct": 100.0,
+        "volume_utilization_pct": 33.33,
+        "has_priority": true
+      },
+      {
+        "uld_id": "ULD-2",
+        "packages_packed": 8,
+        "weight_used": 965.0,
+        "weight_limit": 1000,
+        "weight_utilization_pct": 96.5,
+        "volume_utilization_pct": 38.13,
+        "has_priority": false
+      },
+      {
+        "uld_id": "ULD-3",
+        "packages_packed": 1,
+        "weight_used": 170.0,
+        "weight_limit": 700,
+        "weight_utilization_pct": 24.29,
+        "volume_utilization_pct": 12.86,
+        "has_priority": false
+      }
+    ],
+    "placements": [
+      {
+        "package_id": "P-002",
+        "package_type": "Priority",
+        "uld_id": "ULD-1",
+        "x0": 0.0,
+        "y0": 0.0,
+        "z0": 0.0,
+        "x1": 80.0,
+        "y1": 60.0,
+        "z1": 100.0,
+        "orientation_used": [
+          80,
+          60,
+          100
+        ]
+      },
+      {
+        "package_id": "P-005",
+        "package_type": "Priority",
+        "uld_id": "ULD-1",
+        "x0": 0.0,
+        "y0": 60.0,
+        "z0": 0.0,
+        "x1": 50.0,
+        "y1": 120.0,
+        "z1": 70.0,
+        "orientation_used": [
+          50,
+          60,
+          70
+        ]
+      },
+      {
+        "package_id": "P-003",
+        "package_type": "Priority",
+        "uld_id": "ULD-1",
+        "x0": 0.0,
+        "y0": 0.0,
+        "z0": 100.0,
+        "x1": 50.0,
+        "y1": 60.0,
+        "z1": 140.0,
+        "orientation_used": [
+          50,
+          60,
+          40
+        ]
+      },
+      {
+        "package_id": "P-006",
+        "package_type": "Priority",
+        "uld_id": "ULD-1",
+        "x0": 0.0,
+        "y0": 60.0,
+        "z0": 70.0,
+        "x1": 90.0,
+        "y1": 130.0,
+        "z1": 130.0,
+        "orientation_used": [
+          90,
+          70,
+          60
+        ]
+      },
+      {
+        "package_id": "P-004",
+        "package_type": "Priority",
+        "uld_id": "ULD-1",
+        "x0": 90.0,
+        "y0": 0.0,
+        "z0": 0.0,
+        "x1": 180.0,
+        "y1": 70.0,
+        "z1": 120.0,
+        "orientation_used": [
+          90,
+          70,
+          120
+        ]
+      },
+      {
+        "package_id": "P-001",
+        "package_type": "Priority",
+        "uld_id": "ULD-1",
+        "x0": 0.0,
+        "y0": 120.0,
+        "z0": 0.0,
+        "x1": 80.0,
+        "y1": 180.0,
+        "z1": 50.0,
+        "orientation_used": [
+          80,
+          60,
+          50
+        ]
+      },
+      {
+        "package_id": "E-002",
+        "package_type": "Economy",
+        "uld_id": "ULD-2",
+        "x0": 0.0,
+        "y0": 0.0,
+        "z0": 0.0,
+        "x1": 70.0,
+        "y1": 80.0,
+        "z1": 110.0,
+        "orientation_used": [
+          70,
+          80,
+          110
+        ]
+      },
+      {
+        "package_id": "E-005",
+        "package_type": "Economy",
+        "uld_id": "ULD-1",
+        "x0": 0.0,
+        "y0": 130.0,
+        "z0": 50.0,
+        "x1": 40.0,
+        "y1": 180.0,
+        "z1": 110.0,
+        "orientation_used": [
+          40,
+          50,
+          60
+        ]
+      },
+      {
+        "package_id": "E-004",
+        "package_type": "Economy",
+        "uld_id": "ULD-2",
+        "x0": 0.0,
+        "y0": 80.0,
+        "z0": 0.0,
+        "x1": 70.0,
+        "y1": 140.0,
+        "z1": 90.0,
+        "orientation_used": [
+          70,
+          60,
+          90
+        ]
+      },
+      {
+        "package_id": "E-006",
+        "package_type": "Economy",
+        "uld_id": "ULD-2",
+        "x0": 70.0,
+        "y0": 0.0,
+        "z0": 0.0,
+        "x1": 170.0,
+        "y1": 130.0,
+        "z1": 80.0,
+        "orientation_used": [
+          100,
+          130,
+          80
+        ]
+      },
+      {
+        "package_id": "E-010",
+        "package_type": "Economy",
+        "uld_id": "ULD-2",
+        "x0": 0.0,
+        "y0": 0.0,
+        "z0": 110.0,
+        "x1": 55.0,
+        "y1": 45.0,
+        "z1": 145.0,
+        "orientation_used": [
+          55,
+          45,
+          35
+        ]
+      },
+      {
+        "package_id": "E-007",
+        "package_type": "Economy",
+        "uld_id": "ULD-2",
+        "x0": 0.0,
+        "y0": 80.0,
+        "z0": 90.0,
+        "x1": 45.0,
+        "y1": 150.0,
+        "z1": 145.0,
+        "orientation_used": [
+          45,
+          70,
+          55
+        ]
+      },
+      {
+        "package_id": "E-008",
+        "package_type": "Economy",
+        "uld_id": "ULD-2",
+        "x0": 0.0,
+        "y0": 45.0,
+        "z0": 110.0,
+        "x1": 35.0,
+        "y1": 75.0,
+        "z1": 150.0,
+        "orientation_used": [
+          35,
+          30,
+          40
+        ]
+      },
+      {
+        "package_id": "E-001",
+        "package_type": "Economy",
+        "uld_id": "ULD-2",
+        "x0": 45.0,
+        "y0": 80.0,
+        "z0": 90.0,
+        "x1": 125.0,
+        "y1": 130.0,
+        "z1": 150.0,
+        "orientation_used": [
+          80,
+          50,
+          60
+        ]
+      },
+      {
+        "package_id": "E-003",
+        "package_type": "Economy",
+        "uld_id": "ULD-2",
+        "x0": 45.0,
+        "y0": 130.0,
+        "z0": 90.0,
+        "x1": 85.0,
+        "y1": 180.0,
+        "z1": 120.0,
+        "orientation_used": [
+          40,
+          50,
+          30
+        ]
+      },
+      {
+        "package_id": "E-009",
+        "package_type": "Economy",
+        "uld_id": "ULD-3",
+        "x0": 0.0,
+        "y0": 0.0,
+        "z0": 0.0,
+        "x1": 65.0,
+        "y1": 75.0,
+        "z1": 95.0,
+        "orientation_used": [
+          65,
+          75,
+          95
+        ]
+      }
+    ],
+    "unpacked": []
+  }
+]
