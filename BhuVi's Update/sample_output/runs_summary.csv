@@ -1,6 +1,0 @@
-run_id,total_cost,total_packed,priority_ulds,economy_left_behind,is_feasible,priority_failures
-0,100.0,16,1,0,True,
-1,100.0,16,1,0,True,
-2,100.0,16,1,0,True,
-3,200.0,16,2,0,True,
-4,100.0,16,1,0,True,

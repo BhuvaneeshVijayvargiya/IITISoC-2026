@@ -1,5 +1,0 @@
-id,length,width,height,weight,type,delay_cost
-P-1,70,40,50,100,Priority,
-P-2,70,40,50,100,Priority,
-P-3,70,40,50,150,Economy,20
-P-4,70,40,50,150,Economy,30
