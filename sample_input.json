@@ -1,0 +1,172 @@
+{
+  "K": 100,
+  "ulds": [
+    {
+      "id": "ULD-1",
+      "length": 240,
+      "width": 180,
+      "height": 160,
+      "weight_limit": 1000
+    },
+    {
+      "id": "ULD-2",
+      "length": 240,
+      "width": 180,
+      "height": 160,
+      "weight_limit": 1000
+    },
+    {
+      "id": "ULD-3",
+      "length": 200,
+      "width": 150,
+      "height": 120,
+      "weight_limit": 700
+    }
+  ],
+  "packages": [
+    {
+      "id": "P-001",
+      "length": 80,
+      "width": 60,
+      "height": 50,
+      "weight": 120,
+      "type": "Priority",
+      "delay_cost": 0
+    },
+    {
+      "id": "P-002",
+      "length": 100,
+      "width": 80,
+      "height": 60,
+      "weight": 200,
+      "type": "Priority",
+      "delay_cost": 0
+    },
+    {
+      "id": "P-003",
+      "length": 60,
+      "width": 50,
+      "height": 40,
+      "weight": 80,
+      "type": "Priority",
+      "delay_cost": 0
+    },
+    {
+      "id": "P-004",
+      "length": 120,
+      "width": 90,
+      "height": 70,
+      "weight": 250,
+      "type": "Priority",
+      "delay_cost": 0
+    },
+    {
+      "id": "P-005",
+      "length": 70,
+      "width": 60,
+      "height": 50,
+      "weight": 110,
+      "type": "Priority",
+      "delay_cost": 0
+    },
+    {
+      "id": "P-006",
+      "length": 90,
+      "width": 70,
+      "height": 60,
+      "weight": 150,
+      "type": "Priority",
+      "delay_cost": 0
+    },
+    {
+      "id": "E-001",
+      "length": 80,
+      "width": 60,
+      "height": 50,
+      "weight": 130,
+      "type": "Economy",
+      "delay_cost": 50
+    },
+    {
+      "id": "E-002",
+      "length": 110,
+      "width": 80,
+      "height": 70,
+      "weight": 180,
+      "type": "Economy",
+      "delay_cost": 75
+    },
+    {
+      "id": "E-003",
+      "length": 50,
+      "width": 40,
+      "height": 30,
+      "weight": 60,
+      "type": "Economy",
+      "delay_cost": 30
+    },
+    {
+      "id": "E-004",
+      "length": 90,
+      "width": 70,
+      "height": 60,
+      "weight": 160,
+      "type": "Economy",
+      "delay_cost": 90
+    },
+    {
+      "id": "E-005",
+      "length": 60,
+      "width": 50,
+      "height": 40,
+      "weight": 90,
+      "type": "Economy",
+      "delay_cost": 40
+    },
+    {
+      "id": "E-006",
+      "length": 130,
+      "width": 100,
+      "height": 80,
+      "weight": 220,
+      "type": "Economy",
+      "delay_cost": 110
+    },
+    {
+      "id": "E-007",
+      "length": 70,
+      "width": 55,
+      "height": 45,
+      "weight": 100,
+      "type": "Economy",
+      "delay_cost": 55
+    },
+    {
+      "id": "E-008",
+      "length": 40,
+      "width": 35,
+      "height": 30,
+      "weight": 45,
+      "type": "Economy",
+      "delay_cost": 20
+    },
+    {
+      "id": "E-009",
+      "length": 95,
+      "width": 75,
+      "height": 65,
+      "weight": 170,
+      "type": "Economy",
+      "delay_cost": 85
+    },
+    {
+      "id": "E-010",
+      "length": 55,
+      "width": 45,
+      "height": 35,
+      "weight": 70,
+      "type": "Economy",
+      "delay_cost": 35
+    }
+  ]
+}
