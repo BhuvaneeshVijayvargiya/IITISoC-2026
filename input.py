@@ -18,10 +18,8 @@ CSV format:
 
 import json
 import csv
-
 from packages import Package
 from ULDs import ULD
-
 
 def load_json(filepath: str) -> tuple[list[Package], list[ULD], float]:
     with open(filepath) as f:

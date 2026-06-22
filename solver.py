@@ -2,87 +2,147 @@
 Priority packages are placed first, then Economy packages. For each package,
 ULDs are tried in order and the package is placed in the first ULD where a
 valid position is found. Within a ULD, all 6 orientations of the package are
-tried against a set of candidate positions (the corners of already-placed
-packages), and the first valid (orientation, position) combination is used.
+tried against the set of the corners of already-placed packages, and the first
+valid (orientation, position) combination is used.
 """
 
 import random
 
-
-# ──────────────────────────────────────────────────────────────────────────
-# GEOMETRY ENGINE
-# ──────────────────────────────────────────────────────────────────────────
-
-def overlaps(ax0, ay0, az0, ax1, ay1, az1, bx0, by0, bz0, bx1, by1, bz1) -> bool:
-    return not (ax1 <= bx0 or bx1 <= ax0 or
-                ay1 <= by0 or by1 <= ay0 or
-                az1 <= bz0 or bz1 <= az0)
-
-
-def is_valid(uld, pkg, x0, y0, z0, l, w, h) -> bool:
-    x1, y1, z1 = x0 + l, y0 + w, z0 + h
-
-    if x0 < 0 or y0 < 0 or z0 < 0:
+#checks if there is some overlappping volume between two packages
+def overlaps(ax0, ay0, az0, ax1, ay1, az1, bx0, by0, bz0, bx1, by1, bz1):
+    if ax1 <= bx0:
         return False
-    if x1 > uld.length or y1 > uld.width or z1 > uld.height:
+    if bx1 <= ax0:
+        return False
+    if ay1 <= by0:
+        return False
+    if by1 <= ay0:
+        return False
+    if az1 <= bz0:
+        return False
+    if bz1 <= az0:
+        return False
+    return True
+
+# Checks that the package fits within ULD bounds, doesn't exceed weight limit, and doesn't overlap any already-placed package
+def is_valid(uld, pkg, x0, y0, z0, l, w, h):
+    x1 = x0 + l
+    y1 = y0 + w
+    z1 = z0 + h
+
+    if x0 < 0:
+        return False
+    if y0 < 0:
+        return False
+    if z0 < 0:
+        return False
+    if x1 > uld.length:
+        return False
+    if y1 > uld.width:
+        return False
+    if z1 > uld.height:
         return False
     if uld.current_weight + pkg.weight > uld.weight_limit:
         return False
 
     for placed in uld.placed_packages:
-        px0, py0, pz0 = placed.pos
-        pl, pw, ph = placed.ori
-        px1, py1, pz1 = px0 + pl, py0 + pw, pz0 + ph
+        px0 = placed.pos[0]
+        py0 = placed.pos[1]
+        pz0 = placed.pos[2]
+        pl = placed.ori[0]
+        pw = placed.ori[1]
+        ph = placed.ori[2]
+        px1 = px0 + pl
+        py1 = py0 + pw
+        pz1 = pz0 + ph
         if overlaps(x0, y0, z0, x1, y1, z1, px0, py0, pz0, px1, py1, pz1):
             return False
 
     return True
 
+# Collects the x, y, z edges of all placed packages and returns every corner-point combination as a candidate origin for the next placement
+def candidate_positions(uld):
+    xs = [0.0]
+    ys = [0.0]
+    zs = [0.0]
 
-def candidate_positions(uld) -> list[tuple]:
-    xs, ys, zs = {0.0}, {0.0}, {0.0}
     for p in uld.placed_packages:
-        x0, y0, z0 = p.pos
-        l, w, h = p.ori
-        xs.update([x0, x0 + l])
-        ys.update([y0, y0 + w])
-        zs.update([z0, z0 + h])
-    return [(x, y, z) for x in sorted(xs) for y in sorted(ys) for z in sorted(zs)]
+        x0 = p.pos[0]
+        y0 = p.pos[1]
+        z0 = p.pos[2]
+        l = p.ori[0]
+        w = p.ori[1]
+        h = p.ori[2]
+
+        if x0 not in xs:
+            xs.append(x0)
+        if x0 + l not in xs:
+            xs.append(x0 + l)
+
+        if y0 not in ys:
+            ys.append(y0)
+        if y0 + w not in ys:
+            ys.append(y0 + w)
+
+        if z0 not in zs:
+            zs.append(z0)
+        if z0 + h not in zs:
+            zs.append(z0 + h)
+
+    xs.sort()
+    ys.sort()
+    zs.sort()
+
+    positions = []
+    for x in xs:
+        for y in ys:
+            for z in zs:
+                positions.append((x, y, z))
+
+    return positions
 
 
-# ──────────────────────────────────────────────────────────────────────────
-# FIRST FIT PLACEMENT
-# ──────────────────────────────────────────────────────────────────────────
-
-def first_fit_place(uld, pkg, rng: random.Random = None) -> bool:
+def first_fit_place(uld, pkg, rng=None):
     orientations = pkg.orientations()
+
     if rng:
         rng.shuffle(orientations)
 
-    for l, w, h in orientations:
-        for x0, y0, z0 in candidate_positions(uld):
+    for orientation in orientations:
+        l = orientation[0]
+        w = orientation[1]
+        h = orientation[2]
+
+        for position in candidate_positions(uld):
+            x0 = position[0]
+            y0 = position[1]
+            z0 = position[2]
+
             if is_valid(uld, pkg, x0, y0, z0, l, w, h):
                 pkg.uld_id = uld.id
                 pkg.pos = (x0, y0, z0)
                 pkg.ori = (l, w, h)
                 uld.placed_packages.append(pkg)
-                uld.current_weight += pkg.weight
+                uld.current_weight = uld.current_weight + pkg.weight
                 return True
+
     return False
 
 
-# ──────────────────────────────────────────────────────────────────────────
-# SOLVER
-# ──────────────────────────────────────────────────────────────────────────
+def solve(packages, ulds, K, rng=None, run_id=0):
+    fresh_ulds = []
+    for u in ulds:
+        new_uld = type(u)(id=u.id, length=u.length, width=u.width, height=u.height, weight_limit=u.weight_limit)
+        fresh_ulds.append(new_uld)
 
-def solve(packages, ulds, K: float, rng: random.Random = None, run_id: int = 0) -> dict:
-    fresh_ulds = [
-        type(u)(id=u.id, length=u.length, width=u.width, height=u.height, weight_limit=u.weight_limit)
-        for u in ulds
-    ]
+    priority_pkgs = []
+    economy_pkgs = []
 
-    priority_pkgs = [p for p in packages if p.package_type == "Priority"]
-    economy_pkgs = [p for p in packages if p.package_type == "Economy"]
+    for p in packages:
+        if p.package_type == "Priority":
+            priority_pkgs.append(p)
+        else:
+            economy_pkgs.append(p)
 
     if rng:
         rng.shuffle(priority_pkgs)
@@ -104,12 +164,68 @@ def solve(packages, ulds, K: float, rng: random.Random = None, run_id: int = 0) 
         if not packed:
             unpacked.append(pkg)
 
-    left_behind_cost = sum(p.delay_cost for p in unpacked if p.package_type == "Economy")
-    priority_ulds = sum(1 for u in fresh_ulds if u.has_priority)
-    total_cost = left_behind_cost + K * priority_ulds
-    priority_failures = [p.id for p in unpacked if p.package_type == "Priority"]
+    left_behind_cost = 0
+    for p in unpacked:
+        if p.package_type == "Economy":
+            left_behind_cost = left_behind_cost + p.delay_cost
 
-    return {
+    priority_ulds = 0
+    for u in fresh_ulds:
+        if u.has_priority:
+            priority_ulds = priority_ulds + 1
+
+    total_cost = left_behind_cost + K * priority_ulds
+
+    priority_failures = []
+    for p in unpacked:
+        if p.package_type == "Priority":
+            priority_failures.append(p.id)
+
+    # Collect per-ULD utillization stats for the result report
+    uld_stats = []
+    for u in fresh_ulds:
+        if u.weight_limit != 0:
+            weight_utilization_pct = round(u.current_weight / u.weight_limit * 100, 2)
+        else:
+            weight_utilization_pct = 0
+
+        uld_info = {
+            "uld_id": u.id,
+            "packages_packed": len(u.placed_packages),
+            "weight_used": u.current_weight,
+            "weight_limit": u.weight_limit,
+            "weight_utilization_pct": weight_utilization_pct,
+            "volume_utilization_pct": round(u.utilization() * 100, 2),
+            "has_priority": u.has_priority,
+        }
+        uld_stats.append(uld_info)
+
+    placements = []
+    for p in placed_packages:
+        placement_info = {
+            "package_id": p.id,
+            "package_type": p.package_type,
+            "uld_id": p.uld_id,
+            "x0": p.pos[0],
+            "y0": p.pos[1],
+            "z0": p.pos[2],
+            "x1": p.pos[0] + p.ori[0],
+            "y1": p.pos[1] + p.ori[1],
+            "z1": p.pos[2] + p.ori[2],
+            "orientation_used": list(p.ori),
+        }
+        placements.append(placement_info)
+
+    unpacked_list = []
+    for p in unpacked:
+        unpacked_info = {
+            "package_id": p.id,
+            "package_type": p.package_type,
+            "delay_cost": p.delay_cost,
+        }
+        unpacked_list.append(unpacked_info)
+
+    result = {
         "run_id": run_id,
         "summary": {
             "total_cost": total_cost,
@@ -120,35 +236,11 @@ def solve(packages, ulds, K: float, rng: random.Random = None, run_id: int = 0) 
             "is_feasible": len(priority_failures) == 0,
             "priority_failures": priority_failures,
         },
-        "uld_stats": [
-            {
-                "uld_id": u.id,
-                "packages_packed": len(u.placed_packages),
-                "weight_used": u.current_weight,
-                "weight_limit": u.weight_limit,
-                "weight_utilization_pct": round(u.current_weight / u.weight_limit * 100, 2) if u.weight_limit else 0,
-                "volume_utilization_pct": round(u.utilization() * 100, 2),
-                "has_priority": u.has_priority,
-            }
-            for u in fresh_ulds
-        ],
-        "placements": [
-            {
-                "package_id": p.id,
-                "package_type": p.package_type,
-                "uld_id": p.uld_id,
-                "x0": p.pos[0], "y0": p.pos[1], "z0": p.pos[2],
-                "x1": p.pos[0] + p.ori[0], "y1": p.pos[1] + p.ori[1], "z1": p.pos[2] + p.ori[2],
-                "orientation_used": list(p.ori),
-            }
-            for p in placed_packages
-        ],
-        "unpacked": [
-            {
-                "package_id": p.id,
-                "package_type": p.package_type,
-                "delay_cost": p.delay_cost,
-            }
-            for p in unpacked
-        ],
+        "uld_stats": uld_stats,
+        "placements": placements,
+        "unpacked": unpacked_list,
     }
+
+    return result
+        
+    

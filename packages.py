@@ -1,7 +1,6 @@
 import itertools
 from dataclasses import dataclass, field
 
-
 @dataclass
 class Package:
     id: str
