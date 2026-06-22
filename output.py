@@ -2,10 +2,7 @@ import json
 import csv
 import os
 
-
-# ──────────────────────────────────────────────────────────────────────────
 # SINGLE RESULT WRITERS
-# ──────────────────────────────────────────────────────────────────────────
 
 def write_official_txt(result: dict, filepath: str):
     s = result["summary"]
@@ -60,10 +57,7 @@ def write_single(result: dict, out_dir: str = "output"):
     print(f"[OK] solution.json  -> {out_dir}/solution.json")
     print(f"[OK] placements.csv -> {out_dir}/placements.csv")
 
-
-# ──────────────────────────────────────────────────────────────────────────
 # MULTI-RUN WRITERS 
-# ──────────────────────────────────────────────────────────────────────────
 
 def write_multi(all_results: list, out_dir: str = "output"):
     os.makedirs(out_dir, exist_ok=True)
