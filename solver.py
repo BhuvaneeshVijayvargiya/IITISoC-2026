@@ -8,7 +8,7 @@ valid (orientation, position) combination is used.
 
 import random
 
-
+#checks if there is some overlappping volume between two packages
 def overlaps(ax0, ay0, az0, ax1, ay1, az1, bx0, by0, bz0, bx1, by1, bz1):
     if ax1 <= bx0:
         return False
@@ -24,7 +24,7 @@ def overlaps(ax0, ay0, az0, ax1, ay1, az1, bx0, by0, bz0, bx1, by1, bz1):
         return False
     return True
 
-
+# Checks that the package fits within ULD bounds, doesn't exceed weight limit, and doesn't overlap any already-placed package
 def is_valid(uld, pkg, x0, y0, z0, l, w, h):
     x1 = x0 + l
     y1 = y0 + w
@@ -60,7 +60,7 @@ def is_valid(uld, pkg, x0, y0, z0, l, w, h):
 
     return True
 
-
+# Collects the x, y, z edges of all placed packages and returns every corner-point combination as a candidate origin for the next placement
 def candidate_positions(uld):
     xs = [0.0]
     ys = [0.0]
@@ -181,6 +181,7 @@ def solve(packages, ulds, K, rng=None, run_id=0):
         if p.package_type == "Priority":
             priority_failures.append(p.id)
 
+    # Collect per-ULD utillization stats for the result report
     uld_stats = []
     for u in fresh_ulds:
         if u.weight_limit != 0:
