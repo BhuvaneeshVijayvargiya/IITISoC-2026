@@ -49,9 +49,9 @@ def generate_pct(package, ulds_list):
                         leaves.append(node)
 
     return leaves
-
-
-
+#place method is for placing package in the end
+#check_coll is to check for collision with already packed packages
+#generate_pct generated a depth-1 PCT.
 
 
 
