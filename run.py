@@ -5,7 +5,7 @@ from input import load
 from solver import solve
 from output import write_single
 
-packages, ulds, K = load("sample_input.json")
+packages, ulds, K = load("sample_input.csv")
 result = solve(packages, ulds, K)
 write_single(result, out_dir="output")
 
