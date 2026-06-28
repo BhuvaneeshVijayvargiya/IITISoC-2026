@@ -10,6 +10,7 @@ class ULD:
 
     current_weight: float = 0.0
     placed_packages: list = field(default_factory=list)   
+    extr: list = field(default_factory=lambda: [(0, 0, 0)])
 
     @property
     def has_priority(self) -> bool:
