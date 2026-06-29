@@ -3,10 +3,6 @@ import csv
 import os
 
 
-# ============================================================
-# OFFICIAL EVALUATION OUTPUT
-# ============================================================
-
 def write_official_txt(result: dict, filepath: str):
     s = result["summary"]
 
@@ -30,18 +26,10 @@ def write_official_txt(result: dict, filepath: str):
         f.write("\n".join(lines) + "\n")
 
 
-# ============================================================
-# JSON
-# ============================================================
-
 def write_json(result: dict, filepath: str):
     with open(filepath, "w") as f:
         json.dump(result, f, indent=2)
 
-
-# ============================================================
-# PLACEMENTS CSV
-# ============================================================
 
 def write_placements_csv(
     result: dict,
@@ -90,10 +78,6 @@ def write_placements_csv(
             })
 
 
-# ============================================================
-# ULD STATS CSV
-# ============================================================
-
 def write_uld_stats_csv(result: dict, filepath: str):
 
     fields = [
@@ -120,10 +104,6 @@ def write_uld_stats_csv(result: dict, filepath: str):
             })
 
 
-# ============================================================
-# UNPACKED CSV
-# ============================================================
-
 def write_unpacked_csv(result: dict, filepath: str):
 
     fields = [
@@ -145,10 +125,6 @@ def write_unpacked_csv(result: dict, filepath: str):
                 **p,
             })
 
-
-# ============================================================
-# SINGLE RUN OUTPUT
-# ============================================================
 
 def write_single(result: dict, out_dir: str = "output"):
 
@@ -185,10 +161,6 @@ def write_single(result: dict, out_dir: str = "output"):
     print(f"[OK] uld_stats.csv  -> {out_dir}/uld_stats.csv")
     print(f"[OK] unpacked.csv   -> {out_dir}/unpacked.csv")
 
-
-# ============================================================
-# MULTI RUN OUTPUT
-# ============================================================
 
 def write_multi(all_results: list, out_dir: str = "output"):
 
