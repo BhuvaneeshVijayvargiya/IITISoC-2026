@@ -40,7 +40,7 @@ def add_round(records: list, all_nodes: list, best_node, round_number: int):
         chosen = (node is best_node)
         records.append(pct_node_to_dict(node, chosen, round_number))
 
-def save(records : list, out_dir: str = "output"):
+def save_pct(records : list, out_dir: str = "output"):
     os.makedirs(out_dir, exist_ok=True)
 
     csv_path = os.path.join(out_dir, "pct_log.csv")
