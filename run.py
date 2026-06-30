@@ -12,3 +12,6 @@ pct_store.save(out_dir="output")
 
 print("Done! Cost:", result["summary"]["total_cost"])
 print("Feasible:", result["summary"]["is_feasible"])
+
+from visualize import visualize_ulds
+visualize_ulds(ulds)
