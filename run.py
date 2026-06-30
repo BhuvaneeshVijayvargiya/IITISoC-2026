@@ -6,7 +6,7 @@ from solver import solve
 from output import write_single
 
 packages, ulds, K = load("sample_input.csv")
-result = solve(packages, ulds, K)
+result, pct_store = solve(packages, ulds, K)
 write_single(result, out_dir="output")
 pct_store.save(out_dir="output")
 
