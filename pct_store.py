@@ -35,41 +35,29 @@ def pct_node_to_dict(node, was_chosen: bool, round_number: int) -> dict:
     }
 
 
-class PCTStore:
-    def __init__(self):
-        self.records = []
+def add_round(records: list, all_nodes: list, best_node, round_number: int):
+    for node in all_nodes:
+        chosen = (node is best_node)
+        records.append(pct_node_to_dict(node, chosen, round_number))
 
-    def add_round(self, all_nodes: list, best_node, round_number: int):
-        for node in all_nodes:
-            chosen = (node is best_node)
-            row = pct_node_to_dict(node, chosen, round_number)
-            self.records.append(row)
+def save_pct(records : list, out_dir: str = "output"):
+    os.makedirs(out_dir, exist_ok=True)
 
-    def save(self, out_dir: str = "output"):
-        os.makedirs(out_dir, exist_ok=True)
+    csv_path = os.path.join(out_dir, "pct_log.csv")
+    if records:
+        fieldnames = list(records[0].keys())
+        with open(csv_path, "w", newline="") as f:
+            writer = csv.DictWriter(f, fieldnames=fieldnames)
+            writer.writeheader()
+            writer.writerows(records)
+        
 
-        csv_path = os.path.join(out_dir, "pct_log.csv")
-        if self.records:
-            fieldnames = list(self.records[0].keys())
-            with open(csv_path, "w", newline="") as f:
-                writer = csv.DictWriter(f, fieldnames=fieldnames)
-                writer.writeheader()
-                writer.writerows(self.records)
-            print(f"[PCT] pct_log.csv   -> {csv_path}  ({len(self.records)} rows)")
-        else:
-            print("[PCT] No PCT nodes were recorded.")
-
-        json_path = os.path.join(out_dir, "pct_log.json")
-        with open(json_path, "w") as f:
-            json.dump(self.records, f, indent=2)
-        print(f"[PCT] pct_log.json  -> {json_path}")
-
-    def summary(self) -> dict:
-        total          = len(self.records)
-        chosen         = sum(1 for r in self.records if r["was_chosen"])
-        rounds_covered = len(set(r["round"] for r in self.records))
-        return {
-            "total_pct_nodes_seen": total,
-            "nodes_chosen":         chosen,
-            "rounds_processed":     rounds_covered,
-        }
+def summary(records:  list) -> dict:
+    total          = len(records)
+    chosen         = sum(1 for r in records if r["was_chosen"])
+    rounds_covered = len(set(r["round"] for r in records))
+    return {
+        "total_pct_nodes_seen": total,
+        "nodes_chosen":         chosen,
+        "rounds_processed":     rounds_covered,
+    }

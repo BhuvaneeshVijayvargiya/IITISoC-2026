@@ -1,5 +1,5 @@
 from pct import PCT
-from pct_store import PCTStore
+from pct_store import add_round
 
 
 def check_collision(x, y, z, l, w, h, placed):
@@ -96,14 +96,14 @@ def solve(packages, ulds, K):
 
     ordered = priority_pkgs + economy_pkgs
     unpacked = []
-    store = PCTStore()
+    pct_log = []
 
     for round_number, package in enumerate(ordered, start=1):
         possible_placements = generate_pct(package, ulds)
 
         if len(possible_placements) == 0:
             unpacked.append(package)
-            store.add_round([], None, round_number)
+            add_round(pct_log ,[], None, round_number)
             continue
 
         for node in possible_placements:
@@ -114,7 +114,7 @@ def solve(packages, ulds, K):
             if node.score > best.score:
                 best = node
 
-        store.add_round(possible_placements, best, round_number)
+        add_round(pct_log, possible_placements, best, round_number)
         place(package, best)
 
     left_behind_cost = 0
@@ -183,4 +183,4 @@ def solve(packages, ulds, K):
         "uld_stats": uld_stats,
     }
 
-    return result, store
+    return result, pct_log

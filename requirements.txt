@@ -1,0 +1,6 @@
+#Install these required Libraries
+#use the following command : pip install -r requirements.txt
+
+
+pandas
+plotly
