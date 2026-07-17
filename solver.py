@@ -26,13 +26,17 @@ def generate_pct(package, ulds_list):
             continue
 
         for ep in uld.extr:
-            x, y, z = ep
+            ax, ay, az, sx, sy, sz = ep
 
             for ori in package.orientations():
                 l, w, h = ori
+                x = ax if sx > 0 else ax - l
+                y = ay if sy > 0 else ay - w
+                z = az if sz > 0 else az - h
 
+                out_of_bounds = (x < 0) or (y < 0) or (z < 0)
                 sticks_out = (x + l > uld.length) or (y + w > uld.width) or (z + h > uld.height)
-                if sticks_out:
+                if sticks_out or out_of_bounds:
                     continue
 
                 has_collision = False
@@ -55,10 +59,37 @@ def score_node(node):
     this_is_priority = node.package.package_type == "Priority"
 
     if already_has_priority and this_is_priority:
-        score += 100
+        score += 150
 
-    distance_from_origin = node.x + node.y + node.z
-    score -= distance_from_origin
+    uld = node.uld
+    target_x, target_y, target_z = uld.center()
+
+    weighted_x = node.package.weight * node.cx
+    weighted_y = node.package.weight * node.cy
+    weighted_z = node.package.weight * node.cz
+    total_weight = node.package.weight
+ 
+    for placed in uld.placed_packages:
+        px, py, pz = placed.pos
+        pl, pw, ph = placed.ori
+        pcx = px + pl / 2
+        pcy = py + pw / 2
+        pcz = pz + ph / 2
+ 
+        weighted_x += placed.weight * pcx
+        weighted_y += placed.weight * pcy
+        weighted_z += placed.weight * pcz
+        total_weight += placed.weight
+ 
+    com_x = weighted_x / total_weight
+    com_y = weighted_y / total_weight
+    com_z = weighted_z / total_weight
+ 
+    com_offset = abs(com_x - target_x) + abs(com_y - target_y) + abs(com_z - target_z)
+    score -= 2 * com_offset
+
+    box_offset = abs(node.cx - target_x) + abs(node.cy - target_y) + abs(node.cz - target_z)
+    score -= 0.01 * box_offset
 
     return score
 
@@ -71,13 +102,22 @@ def place(package, node):
     package.uld_id = uld.id
     package.pos = (x, y, z)
     package.ori = (l, w, h)
+    sx, sy, sz = node.direction
 
     uld.placed_packages.append(package)
     uld.current_weight += package.weight
 
-    new_point_1 = (x + l, y, z)
-    new_point_2 = (x, y + w, z)
-    new_point_3 = (x, y, z + h)
+    far_x = x + l if sx > 0 else x
+    far_y = y + w if sy > 0 else y
+    far_z = z + h if sz > 0 else z
+ 
+    near_x = x if sx > 0 else x + l
+    near_y = y if sy > 0 else y + w
+    near_z = z if sz > 0 else z + h
+ 
+    new_point_1 = (far_x, near_y, near_z, sx, sy, sz)
+    new_point_2 = (near_x, far_y, near_z, sx, sy, sz)
+    new_point_3 = (near_x, near_y, far_z, sx, sy, sz)
 
     for pt in [new_point_1, new_point_2, new_point_3]:
         if pt not in uld.extr:
