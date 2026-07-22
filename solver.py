@@ -1,5 +1,6 @@
 from pct import PCT
 from pct_store import add_round
+from stability import calculate_overlap_area
 
 
 def check_collision(x, y, z, l, w, h, placed):
@@ -14,7 +15,7 @@ def check_collision(x, y, z, l, w, h, placed):
         return False
 
     return True
-    
+
 
 def generate_pct(package, ulds_list):
     possible_placements = []
@@ -41,9 +42,28 @@ def generate_pct(package, ulds_list):
                         has_collision = True
                         break
 
+
                 if not has_collision:
-                    node = PCT(package, uld, ep, ori)
-                    possible_placements.append(node)
+                    is_stable = False
+
+
+                    if z == 0:
+                        is_stable = True
+                    else:
+                        supported_area = 0
+                        for placed in uld.placed_packages:
+                            px, py, pz = placed.pos
+                            pl, pw, ph = placed.ori
+
+                            if pz + ph == z:
+                                supported_area += calculate_overlap_area(x, y, l, w, px, py, pl, pw)
+
+                        if supported_area >= (l * w) * 0.5:
+                            is_stable = True
+
+                    if is_stable:
+                        node = PCT(package, uld, ep, ori)
+                        possible_placements.append(node)
 
     return possible_placements
 
@@ -103,7 +123,7 @@ def solve(packages, ulds, K):
 
         if len(possible_placements) == 0:
             unpacked.append(package)
-            add_round(pct_log ,[], None, round_number)
+            add_round(pct_log, [], None, round_number)
             continue
 
         for node in possible_placements:
