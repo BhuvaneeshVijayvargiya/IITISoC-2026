@@ -1,5 +1,6 @@
 from pct import PCT
 from pct_store import add_round
+from stability import calculate_overlap_area
 
 
 def check_collision(x, y, z, l, w, h, placed):
@@ -14,7 +15,7 @@ def check_collision(x, y, z, l, w, h, placed):
         return False
 
     return True
-    
+
 
 def generate_pct(package, ulds_list):
     possible_placements = []
@@ -26,17 +27,13 @@ def generate_pct(package, ulds_list):
             continue
 
         for ep in uld.extr:
-            ax, ay, az, sx, sy, sz = ep
+            x, y, z = ep
 
             for ori in package.orientations():
                 l, w, h = ori
-                x = ax if sx > 0 else ax - l
-                y = ay if sy > 0 else ay - w
-                z = az if sz > 0 else az - h
 
-                out_of_bounds = (x < 0) or (y < 0) or (z < 0)
                 sticks_out = (x + l > uld.length) or (y + w > uld.width) or (z + h > uld.height)
-                if sticks_out or out_of_bounds:
+                if sticks_out:
                     continue
 
                 has_collision = False
@@ -45,9 +42,28 @@ def generate_pct(package, ulds_list):
                         has_collision = True
                         break
 
+
                 if not has_collision:
-                    node = PCT(package, uld, ep, ori)
-                    possible_placements.append(node)
+                    is_stable = False
+
+
+                    if z == 0:
+                        is_stable = True
+                    else:
+                        supported_area = 0
+                        for placed in uld.placed_packages:
+                            px, py, pz = placed.pos
+                            pl, pw, ph = placed.ori
+
+                            if pz + ph == z:
+                                supported_area += calculate_overlap_area(x, y, l, w, px, py, pl, pw)
+
+                        if supported_area >= (l * w) * 0.5:
+                            is_stable = True
+
+                    if is_stable:
+                        node = PCT(package, uld, ep, ori)
+                        possible_placements.append(node)
 
     return possible_placements
 
@@ -59,37 +75,10 @@ def score_node(node):
     this_is_priority = node.package.package_type == "Priority"
 
     if already_has_priority and this_is_priority:
-        score += 150
+        score += 100
 
-    uld = node.uld
-    target_x, target_y, target_z = uld.center()
-
-    weighted_x = node.package.weight * node.cx
-    weighted_y = node.package.weight * node.cy
-    weighted_z = node.package.weight * node.cz
-    total_weight = node.package.weight
- 
-    for placed in uld.placed_packages:
-        px, py, pz = placed.pos
-        pl, pw, ph = placed.ori
-        pcx = px + pl / 2
-        pcy = py + pw / 2
-        pcz = pz + ph / 2
- 
-        weighted_x += placed.weight * pcx
-        weighted_y += placed.weight * pcy
-        weighted_z += placed.weight * pcz
-        total_weight += placed.weight
- 
-    com_x = weighted_x / total_weight
-    com_y = weighted_y / total_weight
-    com_z = weighted_z / total_weight
- 
-    com_offset = abs(com_x - target_x) + abs(com_y - target_y) + abs(com_z - target_z)
-    score -= 2 * com_offset
-
-    box_offset = abs(node.cx - target_x) + abs(node.cy - target_y) + abs(node.cz - target_z)
-    score -= 0.01 * box_offset
+    distance_from_origin = node.x + node.y + node.z
+    score -= distance_from_origin
 
     return score
 
@@ -102,22 +91,13 @@ def place(package, node):
     package.uld_id = uld.id
     package.pos = (x, y, z)
     package.ori = (l, w, h)
-    sx, sy, sz = node.direction
 
     uld.placed_packages.append(package)
     uld.current_weight += package.weight
 
-    far_x = x + l if sx > 0 else x
-    far_y = y + w if sy > 0 else y
-    far_z = z + h if sz > 0 else z
- 
-    near_x = x if sx > 0 else x + l
-    near_y = y if sy > 0 else y + w
-    near_z = z if sz > 0 else z + h
- 
-    new_point_1 = (far_x, near_y, near_z, sx, sy, sz)
-    new_point_2 = (near_x, far_y, near_z, sx, sy, sz)
-    new_point_3 = (near_x, near_y, far_z, sx, sy, sz)
+    new_point_1 = (x + l, y, z)
+    new_point_2 = (x, y + w, z)
+    new_point_3 = (x, y, z + h)
 
     for pt in [new_point_1, new_point_2, new_point_3]:
         if pt not in uld.extr:
@@ -143,7 +123,7 @@ def solve(packages, ulds, K):
 
         if len(possible_placements) == 0:
             unpacked.append(package)
-            add_round(pct_log ,[], None, round_number)
+            add_round(pct_log, [], None, round_number)
             continue
 
         for node in possible_placements:
