@@ -1,3 +1,5 @@
+#saves every box-packing decision made by PCT into a spreadsheet
+
 import csv
 import json
 import os
