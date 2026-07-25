@@ -1,8 +1,9 @@
+#solver to arrange in such a way which minimizes penalty cost in a physically possible way.
+
 import copy
 from pct import PCT
 from pct_store import add_round
 from stability import calculate_overlap_area
-
 
 def check_collision(x, y, z, l, w, h, placed):
     px, py, pz = placed.pos
