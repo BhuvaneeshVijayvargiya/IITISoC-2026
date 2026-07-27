@@ -1,3 +1,5 @@
+#this is to read the input cargo data and make it into a readable format for the rest of the program.
+
 import pandas as pd
 from packages import Package
 from ULDs import ULD

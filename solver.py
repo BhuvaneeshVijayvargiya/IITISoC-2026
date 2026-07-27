@@ -1,3 +1,6 @@
+#solver to arrange in such a way which minimizes penalty cost in a physically possible way.
+
+import copy
 from pct import PCT
 from pct_store import add_round
 from stability import calculate_overlap_area
@@ -107,40 +110,7 @@ def place(package, node):
             uld.extr.append(pt)
 
 
-def solve(packages, ulds, K, model):
-    priority_pkgs = []
-    economy_pkgs = []
-
-    for p in packages:
-        if p.package_type == "Priority":
-            priority_pkgs.append(p)
-        else:
-            economy_pkgs.append(p)
-
-    ordered = priority_pkgs + economy_pkgs
-    unpacked = []
-    pct_log = []
-
-    for round_number, package in enumerate(ordered, start=1):
-        possible_placements = generate_pct(package, ulds)
-
-        if len(possible_placements) == 0:
-            unpacked.append(package)
-            add_round(pct_log, [], None, round_number)
-            continue
-
-        features = []
-        for node in possible_placements:
-            features.append(extracter(node, node.support))
-        candidates = torch.tensor(features, dtype=torch.float32)
-
-        best_idx = model.rank(candidates)
-        best = possible_placements[best_idx]
-
-        add_round(pct_log, possible_placements, best, round_number)
-        place(package, best)
-
-
+def build_result(ordered, unpacked, ulds, K):
     left_behind_cost = 0
     for p in unpacked:
         if p.package_type == "Economy":
@@ -207,4 +177,136 @@ def solve(packages, ulds, K, model):
         "uld_stats": uld_stats,
     }
 
+    return result
+
+
+def solve(packages, ulds, K):
+    priority_pkgs = []
+    economy_pkgs = []
+
+    for p in packages:
+        if p.package_type == "Priority":
+            priority_pkgs.append(p)
+        else:
+            economy_pkgs.append(p)
+
+    ordered = priority_pkgs + economy_pkgs
+    unpacked = []
+    pct_log = []
+
+    for round_number, package in enumerate(ordered, start=1):
+        possible_placements = generate_pct(package, ulds)
+
+        if len(possible_placements) == 0:
+            unpacked.append(package)
+            add_round(pct_log, [], None, round_number)
+            continue
+
+        for node in possible_placements:
+            node.score = score_node(node)
+
+        best = possible_placements[0]
+        for node in possible_placements:
+            if node.score > best.score:
+                best = node
+
+        add_round(pct_log, possible_placements, best, round_number)
+        place(package, best)
+
+    result = build_result(ordered, unpacked, ulds, K)
+
     return result, pct_log
+
+
+def copy_branch(branch):
+    new_branch = {}
+    new_branch["ulds"] = copy.deepcopy(branch["ulds"])
+    new_branch["packages"] = copy.deepcopy(branch["packages"])
+    new_branch["unpacked"] = copy.deepcopy(branch["unpacked"])
+    new_branch["total_score"] = branch["total_score"]
+    new_branch["pct_log"] = copy.deepcopy(branch["pct_log"])
+    return new_branch
+
+
+def find_uld_by_id(ulds, uld_id):
+    for u in ulds:
+        if u.id == uld_id:
+            return u
+    return None
+
+
+def solve_beam(packages, ulds, K, beam_width=3):
+    priority_pkgs = []
+    economy_pkgs = []
+
+    for p in packages:
+        if p.package_type == "Priority":
+            priority_pkgs.append(p)
+        else:
+            economy_pkgs.append(p)
+
+    ordered = priority_pkgs + economy_pkgs
+
+    first_branch = {}
+    first_branch["ulds"] = copy.deepcopy(ulds)
+    first_branch["packages"] = copy.deepcopy(ordered)
+    first_branch["unpacked"] = []
+    first_branch["total_score"] = 0
+    first_branch["pct_log"] = []
+
+    branches = [first_branch]
+
+    for round_number, package in enumerate(ordered, start=1):
+        all_candidates = []
+
+        for branch in branches:
+            branch_package = branch["packages"][round_number - 1]
+            possible_placements = generate_pct(branch_package, branch["ulds"])
+
+            if len(possible_placements) == 0:
+                new_branch = copy_branch(branch)
+                new_branch["unpacked"].append(new_branch["packages"][round_number - 1])
+                add_round(new_branch["pct_log"], [], None, round_number)
+                all_candidates.append(new_branch)
+                continue
+
+            for node in possible_placements:
+                node.score = score_node(node)
+
+            possible_placements.sort(key=lambda n: n.score, reverse=True)
+            top_nodes = possible_placements[:beam_width]
+
+            for node in top_nodes:
+                new_branch = copy_branch(branch)
+                new_package = new_branch["packages"][round_number - 1]
+                new_uld = find_uld_by_id(new_branch["ulds"], node.uld.id)
+
+                new_node = PCT(new_package, new_uld, node.ep, node.ori)
+                new_node.score = node.score
+                place(new_package, new_node)
+
+                new_branch["total_score"] = new_branch["total_score"] + node.score
+                add_round(new_branch["pct_log"], possible_placements, node, round_number)
+
+                all_candidates.append(new_branch)
+
+        all_candidates.sort(key=lambda b: b["total_score"], reverse=True)
+        branches = all_candidates[:beam_width]
+
+    final_results = []
+    for branch in branches:
+        result = build_result(branch["packages"], branch["unpacked"], branch["ulds"], K)
+        final_results.append({
+            "result": result,
+            "pct_log": branch["pct_log"],
+            "total_score": branch["total_score"],
+            "ulds": branch["ulds"],
+            "packages": branch["packages"],
+        })
+
+    best_branch = final_results[0]
+    for f in final_results:
+        if f["result"]["summary"]["total_cost"] < best_branch["result"]["summary"]["total_cost"]:
+            best_branch = f
+
+    return final_results, best_branch

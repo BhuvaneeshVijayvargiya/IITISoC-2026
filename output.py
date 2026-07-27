@@ -1,5 +1,5 @@
 import os
-
+#temporary file, just used for checking purposes
 
 def write_official_txt(result: dict, filepath: str):
     s = result["summary"]

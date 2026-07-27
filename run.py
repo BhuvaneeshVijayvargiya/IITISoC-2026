@@ -2,9 +2,10 @@
 #python run.py
 
 from input import load
-from solver import solve
+from solver import solve_beam
 from output import write_single
 from pct_store import save_pct
+from beam_store import save_beam_branches
 import torch
 from model import AI
 
@@ -17,8 +18,8 @@ result, pct_store = solve(packages, ulds, K, model)
 write_single(result, out_dir="output")
 save_pct(pct_store, out_dir="output")
 
-print("Done! Cost:", result["summary"]["total_cost"])
-print("Feasible:", result["summary"]["is_feasible"])
+print("Done! Best cost:", best_branch["result"]["summary"]["total_cost"])
+print("Feasible:", best_branch["result"]["summary"]["is_feasible"])
 
 from visualize import visualize_ulds
-visualize_ulds(ulds)
+visualize_ulds(best_branch["ulds"])
