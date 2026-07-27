@@ -2,7 +2,7 @@
 #python run.py
 
 from input import load
-from solver import solve_beam
+from solver import solve
 from output import write_single
 from pct_store import save_pct
 from beam_store import save_beam_branches
