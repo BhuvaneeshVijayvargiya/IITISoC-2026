@@ -1,6 +1,6 @@
 class PCT:
 
-    def __init__(self, package, uld, ep, ori, direction=(1, 1, 1), score=0):
+    def __init__(self, package, uld, ep, ori,support,direction=(1, 1, 1), score=0):
         self.package = package
         self.uld = uld
         self.ep = ep
@@ -15,4 +15,5 @@ class PCT:
         self.cx = self.x + self.l / 2
         self.cy = self.y + self.w / 2
         self.cz = self.z + self.h / 2
+        self.support=support
 

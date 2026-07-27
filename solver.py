@@ -1,7 +1,10 @@
 from pct import PCT
 from pct_store import add_round
 from stability import calculate_overlap_area
-
+from feature import compute_cog_deviation
+import torch
+from feature import extracter
+from model import AI
 
 def check_collision(x, y, z, l, w, h, placed):
     px, py, pz = placed.pos
@@ -41,7 +44,7 @@ def generate_pct(package, ulds_list):
                     if check_collision(x, y, z, l, w, h, placed):
                         has_collision = True
                         break
-
+                supported_area=0
 
                 if not has_collision:
                     is_stable = False
@@ -62,23 +65,23 @@ def generate_pct(package, ulds_list):
                             is_stable = True
 
                     if is_stable:
-                        node = PCT(package, uld, ep, ori)
+                        node = PCT(package, uld, ep, ori,supported_area)
                         possible_placements.append(node)
 
     return possible_placements
 
-
 def score_node(node):
-    score = 0
+    uld=node.uld
+    pkg=node.package
+    score=0.0
+    if uld.has_priority and pkg.package_type=="Priority":
+        score+=1000
+    cog_deviation=compute_cog_deviation(node)
+    score-=15*cog_deviation
+    resulting_volume= uld.used_volume()+(node.l * node.w * node.h)
+    resulting_utilization = resulting_volume / uld.volume() if uld.volume() > 0 else 0.0
+    score+=30*resulting_utilization
 
-    already_has_priority = node.uld.has_priority
-    this_is_priority = node.package.package_type == "Priority"
-
-    if already_has_priority and this_is_priority:
-        score += 100
-
-    distance_from_origin = node.x + node.y + node.z
-    score -= distance_from_origin
 
     return score
 
@@ -104,7 +107,7 @@ def place(package, node):
             uld.extr.append(pt)
 
 
-def solve(packages, ulds, K):
+def solve(packages, ulds, K, model):
     priority_pkgs = []
     economy_pkgs = []
 
@@ -126,16 +129,17 @@ def solve(packages, ulds, K):
             add_round(pct_log, [], None, round_number)
             continue
 
+        features = []
         for node in possible_placements:
-            node.score = score_node(node)
+            features.append(extracter(node, node.support))
+        candidates = torch.tensor(features, dtype=torch.float32)
 
-        best = possible_placements[0]
-        for node in possible_placements:
-            if node.score > best.score:
-                best = node
+        best_idx = model.rank(candidates)
+        best = possible_placements[best_idx]
 
         add_round(pct_log, possible_placements, best, round_number)
         place(package, best)
+
 
     left_behind_cost = 0
     for p in unpacked:
