@@ -180,7 +180,7 @@ def build_result(ordered, unpacked, ulds, K):
     return result
 
 
-def solve(packages, ulds, K):
+def solve(packages, ulds, K,model):
     priority_pkgs = []
     economy_pkgs = []
 
@@ -202,16 +202,17 @@ def solve(packages, ulds, K):
             add_round(pct_log, [], None, round_number)
             continue
 
+        features = []
         for node in possible_placements:
-            node.score = score_node(node)
+            features.append(extracter(node, node.support))
+        candidates = torch.tensor(features, dtype=torch.float32)
 
-        best = possible_placements[0]
-        for node in possible_placements:
-            if node.score > best.score:
-                best = node
+        best_idx = model.rank(candidates)
+        best = possible_placements[best_idx]
 
         add_round(pct_log, possible_placements, best, round_number)
         place(package, best)
+
 
     result = build_result(ordered, unpacked, ulds, K)
 

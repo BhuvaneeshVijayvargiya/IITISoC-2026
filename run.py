@@ -18,8 +18,8 @@ result, pct_store = solve(packages, ulds, K, model)
 write_single(result, out_dir="output")
 save_pct(pct_store, out_dir="output")
 
-print("Done! Best cost:", best_branch["result"]["summary"]["total_cost"])
-print("Feasible:", best_branch["result"]["summary"]["is_feasible"])
+print("Done! Best cost:", result["summary"]["total_cost"])
+print("Feasible:", result["summary"]["is_feasible"])
 
 from visualize import visualize_ulds
-visualize_ulds(best_branch["ulds"])
+# visualize_ulds(result[""])
