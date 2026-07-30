@@ -15,6 +15,13 @@ st.set_page_config(
     layout="wide"
 )
 
+if "result" not in st.session_state:
+    st.session_state.result = None
+
+if "ulds" not in st.session_state:
+    st.session_state.ulds = None
+
+
 st.title("📦 Intelligent Cargo Packing & Spatial Neuro-Optimization")
 st.write("Upload a cargo manifest and run the optimizer.")
 
@@ -53,9 +60,18 @@ if st.button("🚀 Run Optimization"):
 
     with st.spinner("Running optimization..."):
         result, pct_store = solve(packages, ulds, K, model)
+
         write_single(result, out_dir="output")
 
+        st.session_state.result = result
+        st.session_state.ulds = ulds
+
     st.success("Optimization completed!")
+
+if st.session_state.result is not None:
+
+    result = st.session_state.result
+    ulds = st.session_state.ulds
 
     summary = result["summary"]
 
@@ -66,12 +82,66 @@ if st.button("🚀 Run Optimization"):
     col3.metric("Priority ULDs", summary["number_of_priority_ulds"])
     col4.metric("Feasible", "Yes" if summary["is_feasible"] else "No")
 
-    st.header("📦 3D Cargo Placement")
+    # ... then keep ALL your existing code:
+    # Step-by-Step Placement
+    # Current Placement
+    # Package Report
+    # Download Button
 
-    for uld in ulds:
-        st.subheader(f"ULD: {uld.id}")
-        fig = create_figure(uld)
+    st.header("📦 Step-by-Step Placement")
+
+    selected_uld = st.selectbox(
+        "Select ULD",
+        [u.id for u in ulds]
+    )
+
+    current_uld = next(u for u in ulds if u.id == selected_uld)
+
+    num_packages = len(current_uld.placed_packages)
+
+    if num_packages == 0:
+        st.warning("No packages placed in this ULD.")
+    else:
+
+        step = st.slider(
+            "Placement Step",
+            1,
+            num_packages,
+            num_packages
+        )
+
+        st.write(f"Showing first **{step}** of **{num_packages}** packages.")
+
+        fig = create_figure(current_uld, step)
+
         st.plotly_chart(fig, use_container_width=True)
+
+        current_package = current_uld.placed_packages[step - 1]
+
+        st.subheader("Current Placement")
+
+        col1, col2 = st.columns(2)
+
+        with col1:
+            st.write(f"**Package:** {current_package.id}")
+            st.write(f"**ULD:** {current_uld.id}")
+            st.write(f"**Type:** {current_package.package_type}")
+            st.write(f"**Weight:** {current_package.weight}")
+
+        with col2:
+            st.write(
+                f"**Position:** "
+                f"({current_package.pos[0]}, "
+                f"{current_package.pos[1]}, "
+                f"{current_package.pos[2]})"
+            )
+
+            st.write(
+                f"**Orientation:** "
+                f"{current_package.ori[0]} × "
+                f"{current_package.ori[1]} × "
+                f"{current_package.ori[2]}"
+            )
 
     st.header("Package Report")
 
