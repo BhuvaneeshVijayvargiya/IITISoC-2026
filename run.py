@@ -9,7 +9,7 @@ from beam_store import save_beam_branches
 import torch
 from model import AI
 
-packages, ulds, K = load(r"IITISoC-2026\inputs\sample_input (1).csv")
+packages, ulds, K = load(r"inputs\sample_input (1).csv")
 model = AI()
 model.load_state_dict(torch.load("pretrained.pt"))
 model.eval()
