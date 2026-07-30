@@ -1,10 +1,14 @@
 #this will help visualize the placement of the packages
 import plotly.graph_objects as go
 
-def create_figure(uld):
+def create_figure(uld, max_packages=None):
     fig = go.Figure()
-
-    for package in uld.placed_packages:
+    if max_packages is None:
+        packages = uld.placed_packages
+    else:
+        packages = uld.placed_packages[:max_packages]
+        
+    for package in packages:
 
         x, y, z = package.pos
         l, w, h = package.ori
