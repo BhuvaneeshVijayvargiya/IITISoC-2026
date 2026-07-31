@@ -10,7 +10,7 @@
 - Bhuvaneesh Vijayvargiya
 - Ranveer Singh Thakur
 
-**Live Demo:** [Click Here](https://aiml-17iitisoc26.streamlit.app/)
+**Deployable Link:** [Click Here](https://aiml-17iitisoc26.streamlit.app/)
 
 ---
 
