@@ -49,16 +49,16 @@ def generate_labeled_step(scenario_files):
         features.append(extracter(node, supported_area))
     candidates = torch.tensor(features,dtype=torch.float32)
 
-    return candidates, label
+    return candidates,label
 
 
-def train(model,scenario_files,epochs,steps_per_epoch,lr=1e-4):
+def train(model,scenario_files,epochs,steps,lr=1e-4):
     optimizer = torch.optim.Adam(model.parameters(), lr=lr)
     for epoch in range(epochs):
         total_loss,correct,seen=0.0,0,0
 
         step=0
-        while step < steps_per_epoch:
+        while step<steps:
             result = generate_labeled_step(scenario_files)
             if result is None:
                 continue   
@@ -77,7 +77,7 @@ def train(model,scenario_files,epochs,steps_per_epoch,lr=1e-4):
             seen += 1
             step += 1
 
-        print(f"epoch {epoch+1:03d}  loss={total_loss/seen:.4f}  acc={correct/seen:.3f}")
+        print(f"epoch {epoch+1}  loss={total_loss/seen}  acc={correct/seen}")
 
     return model
 
@@ -93,5 +93,5 @@ if __name__ == "__main__":
     model = AI()
     if os.path.exists("pretrained.pt"):
         model.load_state_dict(torch.load("pretrained.pt"))
-    train(model, scenario_files, epochs=10, steps_per_epoch=200)
+    train(model, scenario_files, epochs=30, steps=200)
     torch.save(model.state_dict(), "pretrained.pt")

@@ -51,7 +51,7 @@ if uploaded_file is not None:
         st.stop()
 
     model = AI()
-    model.load_state_dict(torch.load("pretrained.pt", map_location="cpu"))
+    model.load_state_dict(torch.load("pretrained.pt",map_location="cpu"))
     model.eval()
 
 st.divider()
