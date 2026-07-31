@@ -79,11 +79,11 @@ def score_node(node):
     score=0.0
     if uld.has_priority and pkg.package_type=="Priority":
         score+=1000
-    cog_deviation=compute_cog_deviation(node)
-    score-=15*cog_deviation
-    resulting_volume= uld.used_volume()+(node.l * node.w * node.h)
-    resulting_utilization = resulting_volume / uld.volume() if uld.volume() > 0 else 0.0
-    score+=30*resulting_utilization
+    cog=compute_cog_deviation(node)
+    score-=15*cog
+    vol= uld.used_volume()+(node.l * node.w * node.h)
+    util = vol / uld.volume() if uld.volume() > 0 else 0.0
+    score+=30*util
 
 
     return score
