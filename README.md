@@ -109,3 +109,4 @@ While placing packages, the system always respects:
 - **PyTorch** — neural network model & training
 - **Pandas** — reading/processing the input data
 - **Plotly** — 3D visualization of packed ULDs
+- **Streamlit** — for UI and deployment
