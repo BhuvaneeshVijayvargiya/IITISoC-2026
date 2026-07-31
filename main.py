@@ -6,10 +6,11 @@ import tempfile
 import os
 
 from input import load
-from solver import solve
+from solver import solve_beam
 from output import write_single
 from model import AI
 from visualize import create_figure
+from beam_store import save_beam_branches
 
 st.set_page_config(
     page_title="Cargo Packing Optimizer",
@@ -22,6 +23,8 @@ if "result" not in st.session_state:
 
 if "ulds" not in st.session_state:
     st.session_state.ulds = None
+if "pct_log" not in st.session_state:
+    st.session_state.pct_log = None
 
 
 st.title("📦 Intelligent Cargo Packing & Spatial Neuro-Optimization")
@@ -51,20 +54,34 @@ if uploaded_file is not None:
         st.stop()
 
     model = AI()
-    model.load_state_dict(torch.load("pretrained.pt",map_location="cpu"))
+    model.load_state_dict(torch.load("pretrained.pt", map_location="cpu"))
     model.eval()
 
 st.divider()
 
-if st.button("🚀 Run Optimization"):
+if uploaded_file is not None and st.button("🚀 Run Optimization"):
 
-    with st.spinner("Running optimization..."):
-        result, pct_store = solve(packages, ulds, K, model)
+    with st.spinner("Running Optimization..."):
+
+        final_results, best_branch = solve_beam(
+            packages,
+            ulds,
+            K,
+            model
+        )
+
+        result = best_branch["result"]
+        packed_ulds = best_branch["ulds"]
+        pct_log = best_branch["pct_log"]
 
         write_single(result, out_dir="output")
 
+        # Optional
+        save_beam_branches(final_results, best_branch)
+
         st.session_state.result = result
-        st.session_state.ulds = ulds
+        st.session_state.ulds = packed_ulds
+        st.session_state.pct_log = pct_log
 
     st.success("Optimization completed!")
 
@@ -75,12 +92,13 @@ if st.session_state.result is not None:
 
     summary = result["summary"]
 
-    col1, col2, col3, col4 = st.columns(4)
+    col1, col2, col3, col4, col5 = st.columns(5)
 
     col1.metric("Total Cost", summary["total_cost"])
     col2.metric("Packed Packages", summary["total_packed_packages"])
     col3.metric("Priority ULDs", summary["number_of_priority_ulds"])
     col4.metric("Feasible", "Yes" if summary["is_feasible"] else "No")
+    col5.metric("Search Strategy", "Beam (k=3)")
 
 
     st.header("📦 Step-by-Step Placement")
