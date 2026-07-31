@@ -14,8 +14,13 @@ def save_beam_branches(final_results, best_branch, out_dir="output"):
         branch_number += 1
 
     best_branch_path = os.path.join(out_dir, "best_branch.json")
+    best_branch_output = {
+        "result": best_branch["result"],
+        "total_score": best_branch["total_score"]
+    }
+
     with open(best_branch_path, "w") as f:
-        json.dump(best_branch, f)
+        json.dump(best_branch_output, f, indent=2)
 
 
 #this is to load the best branch for further use
