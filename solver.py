@@ -237,7 +237,51 @@ def find_uld_by_id(ulds, uld_id):
     return None
 
 
-def solve_beam(packages, ulds, K, beam_width=3):
+LOOKAHEAD_WEIGHT = 0.5  # for one step ahead in beam search
+
+
+def score_with_model(possible_placements, model): 
+    features = []
+    for node in possible_placements:
+        features.append(extracter(node, node.support))
+    candidates = torch.tensor(features, dtype=torch.float32)
+
+    with torch.no_grad():
+        scores = model(candidates)
+
+    for node, s in zip(possible_placements, scores):
+        node.score = float(s)
+
+
+def lookahead_score(branch, node, round_number, model):
+    
+    if round_number >= len(branch["packages"]):
+        return 0.0  
+
+    sim_ulds = copy.deepcopy(branch["ulds"])
+    sim_uld = find_uld_by_id(sim_ulds, node.uld.id)
+    sim_package = copy.deepcopy(node.package)
+
+    child_node = PCT(sim_package, sim_uld, node.ep, node.ori, node.support)
+    place(sim_package, child_node)
+
+    next_package = branch["packages"][round_number]
+    child_candidates = generate_pct(next_package, sim_ulds)
+    if len(child_candidates) == 0:
+        return 0.0
+
+    features = [extracter(c, c.support) for c in child_candidates]
+    candidates = torch.tensor(features, dtype=torch.float32)
+
+    best_idx = model.rank(candidates)
+    with torch.no_grad():
+        child_scores = model(candidates)
+
+    return float(child_scores[best_idx])
+
+
+def solve_beam(packages, ulds, K, model, beam_width=3):
+    print(type(beam_width), beam_width)
     priority_pkgs = []
     economy_pkgs = []
 
@@ -259,6 +303,7 @@ def solve_beam(packages, ulds, K, beam_width=3):
     branches = [first_branch]
 
     for round_number, package in enumerate(ordered, start=1):
+        print(f"Round {round_number}, branches={len(branches)}")
         all_candidates = []
 
         for branch in branches:
@@ -272,18 +317,31 @@ def solve_beam(packages, ulds, K, beam_width=3):
                 all_candidates.append(new_branch)
                 continue
 
-            for node in possible_placements:
-                node.score = score_node(node)
+            score_with_model(possible_placements, model)
+
+            print("beam_width =", beam_width, type(beam_width))
+            print("possible_placements =", type(possible_placements), len(possible_placements))
 
             possible_placements.sort(key=lambda n: n.score, reverse=True)
-            top_nodes = possible_placements[:beam_width]
+
+            print("About to slice...")
+
+            shortlist = possible_placements[: int(beam_width) * 2]
+
+            print("Shortlist length =", len(shortlist))
+
+            for node in shortlist:
+                node.score += LOOKAHEAD_WEIGHT * lookahead_score(branch, node, round_number, model)
+
+            shortlist.sort(key=lambda n: n.score, reverse=True)
+            top_nodes = shortlist[:beam_width]
 
             for node in top_nodes:
                 new_branch = copy_branch(branch)
                 new_package = new_branch["packages"][round_number - 1]
                 new_uld = find_uld_by_id(new_branch["ulds"], node.uld.id)
 
-                new_node = PCT(new_package, new_uld, node.ep, node.ori)
+                new_node = PCT(new_package, new_uld, node.ep, node.ori, node.support)
                 new_node.score = node.score
                 place(new_package, new_node)
 
