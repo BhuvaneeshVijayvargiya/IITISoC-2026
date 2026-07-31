@@ -1,3 +1,5 @@
+# command to run the code is -> python -m streamlit run main.py
+
 import streamlit as st
 import torch
 import tempfile
@@ -32,7 +34,6 @@ uploaded_file = st.file_uploader(
 
 if uploaded_file is not None:
 
-    # Save uploaded file temporarily
     with tempfile.NamedTemporaryFile(delete=False, suffix=".csv") as tmp:
         tmp.write(uploaded_file.getbuffer())
         csv_path = tmp.name
@@ -49,7 +50,6 @@ if uploaded_file is not None:
         st.error(f"Manifest validation failed:\n\n{e}")
         st.stop()
 
-    # Load AI model
     model = AI()
     model.load_state_dict(torch.load("pretrained.pt", map_location="cpu"))
     model.eval()
@@ -82,11 +82,6 @@ if st.session_state.result is not None:
     col3.metric("Priority ULDs", summary["number_of_priority_ulds"])
     col4.metric("Feasible", "Yes" if summary["is_feasible"] else "No")
 
-    # ... then keep ALL your existing code:
-    # Step-by-Step Placement
-    # Current Placement
-    # Package Report
-    # Download Button
 
     st.header("📦 Step-by-Step Placement")
 
