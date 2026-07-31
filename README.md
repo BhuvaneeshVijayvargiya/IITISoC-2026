@@ -10,7 +10,7 @@
 - Bhuvaneesh Vijayvargiya
 - Ranveer Singh Thakur
 
-**Live Demo:** _(link to be added)_
+**Live Demo:** [Click Here](https://aiml-17iitisoc26.streamlit.app/)
 
 ---
 
@@ -91,6 +91,7 @@ While placing packages, the system always respects:
 ├── input.py              # Reads and loads input CSV data into Package/ULD objects
 ├── feature.py            # Converts a placement candidate into numeric features for the model
 ├── solver.py             # Core placement logic: finds, scores, and picks best placements
+├── main.py               # It is for UI and running the code
 ├── model.py              # Neural network (PyTorch) used to rank placement candidates
 ├── beam_store.py         # Tracks and stores branches explored during beam search
 ├── pct.py / pct_store.py # Placement Candidate Tree helpers: representation & storage
